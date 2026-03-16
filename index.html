@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chromascope — Digital Video Synthesizer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="display"></canvas>
+
+<div id="controls-hint">[ space ] controls &nbsp;&middot;&nbsp; [ f ] fullscreen &nbsp;&middot;&nbsp; [ h ] hold &nbsp;&middot;&nbsp; [ s ] step</div>
+
+<div id="broken-indicator">⚡ SYNC</div>
+
+<div id="info-overlay">
+  CHROMASCOPE<br>
+  <span id="info-seq">SEQ —</span><br>
+  <span id="info-timer">TIMER —</span>
+</div>
+
+<div id="controls" class="visible">
+  <!-- SEQ FORM switch -->
+  <div class="ctrl-group">
+    <label>Seq Form</label>
+    <div class="btn-row">
+      <button class="btn active" id="btn-seqform-timer">Timer</button>
+      <button class="btn" id="btn-seqform-audio">Audio</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Colour Balance -->
+  <div class="ctrl-group">
+    <label>Colour Balance</label>
+    <div style="display:flex; gap:8px;">
+      <div class="ctrl-group">
+        <span class="sublabel">R</span>
+        <input type="range" class="red" id="fader-r" min="0" max="100" value="80">
+      </div>
+      <div class="ctrl-group">
+        <span class="sublabel">G</span>
+        <input type="range" class="green" id="fader-g" min="0" max="100" value="70">
+      </div>
+      <div class="ctrl-group">
+        <span class="sublabel">B</span>
+        <input type="range" class="blue" id="fader-b" min="0" max="100" value="90">
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Form Modification Timers A-D -->
+  <div class="ctrl-group">
+    <label>Form Mod</label>
+    <div style="display:flex; gap:8px;">
+      <div class="ctrl-group">
+        <span class="sublabel">A</span>
+        <input type="range" id="formmod-a" min="0" max="100" value="25">
+      </div>
+      <div class="ctrl-group">
+        <span class="sublabel">B</span>
+        <input type="range" id="formmod-b" min="0" max="100" value="15">
+      </div>
+      <div class="ctrl-group">
+        <span class="sublabel">C</span>
+        <input type="range" id="formmod-c" min="0" max="100" value="10">
+      </div>
+      <div class="ctrl-group">
+        <span class="sublabel">D</span>
+        <input type="range" id="formmod-d" min="0" max="100" value="20">
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Sequence -->
+  <div class="ctrl-group">
+    <label>Sequence</label>
+    <div class="btn-row">
+      <button class="btn" id="btn-hold" title="Freeze pattern">Hold</button>
+      <button class="btn" id="btn-step" title="Next pattern">Step</button>
+    </div>
+    <span class="sublabel">Speed</span>
+    <input type="range" id="timer" min="1" max="100" value="85">
+    <span class="sublabel" id="timer-display">8s</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Audio -->
+  <div class="ctrl-group">
+    <label>Audio</label>
+    <div class="btn-row">
+      <button class="btn" id="btn-audio">Mic</button>
+    </div>
+    <input type="range" id="audio-level" min="0" max="100" value="70">
+    <span class="sublabel">Level</span>
+    <div id="audio-meter">
+      <div class="band" id="band-bass"></div>
+      <div class="band" id="band-lomid"></div>
+      <div class="band" id="band-himid"></div>
+      <div class="band" id="band-treble"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Condition -->
+  <div class="ctrl-group">
+    <label>Condition</label>
+    <div class="btn-row">
+      <button class="btn active" id="btn-pristine">Pristine</button>
+      <button class="btn" id="btn-worn">Worn</button>
+    </div>
+    <input type="range" id="broken-amount" min="0" max="100" value="0" style="display:none">
+  </div>
+</div>
+
+<script src="chromascope.js"></script>
+</body>
+</html>

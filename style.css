@@ -1,0 +1,175 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0a0a0a;
+  color: #c8c8c8;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+canvas#display {
+  width: auto;
+  height: 100vh;
+  aspect-ratio: 4 / 3;
+  margin: 0 auto;
+  cursor: none;
+  display: block;
+}
+
+/* Control panel — slides up from bottom */
+#controls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, #1a1a1a 0%, #111 100%);
+  border-top: 1px solid #333;
+  padding: 16px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  transform: translateY(0);
+  transition: transform 0.4s ease;
+  z-index: 10;
+}
+
+#controls.visible {
+  transform: translateY(0);
+}
+
+#controls-hint {
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #444;
+  font-size: 11px;
+  z-index: 5;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+#controls-hint.hidden { opacity: 0; }
+
+.ctrl-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ctrl-group label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #666;
+}
+
+.ctrl-group .sublabel {
+  font-size: 9px;
+  color: #444;
+}
+
+/* Knob styling via range inputs */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #888;
+  cursor: pointer;
+  border: 1px solid #555;
+}
+
+/* RGB faders */
+input[type="range"].red::-webkit-slider-thumb { background: #c44; }
+input[type="range"].green::-webkit-slider-thumb { background: #4c4; }
+input[type="range"].blue::-webkit-slider-thumb { background: #44c; }
+
+/* Buttons */
+.btn {
+  padding: 6px 14px;
+  background: #222;
+  border: 1px solid #444;
+  color: #aaa;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn:hover { background: #444; color: #fff; border-color: #666; }
+.btn:active { transform: scale(0.95); }
+.btn.active { background: #555; color: #fff; border-color: #aaa; box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+.btn.hold-active { background: #664; color: #fc3; border-color: #fc3; box-shadow: 0 0 12px rgba(255,204,51,0.4); }
+.btn.audio-active { background: #543; color: #f64; border-color: #f64; box-shadow: 0 0 12px rgba(255,100,64,0.4); animation: pulse 1.5s ease infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+.btn-row {
+  display: flex;
+  gap: 6px;
+}
+
+/* Divider */
+.divider {
+  width: 1px;
+  height: 50px;
+  background: #333;
+  align-self: center;
+}
+
+/* Audio meter */
+#audio-meter {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 30px;
+}
+
+#audio-meter .band {
+  width: 8px;
+  background: #4a4;
+  min-height: 2px;
+  transition: height 0.05s;
+}
+
+/* Fullscreen overlay info */
+#info-overlay {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  color: #333;
+  font-size: 10px;
+  z-index: 5;
+  text-align: right;
+  pointer-events: none;
+}
+
+/* Broken mode indicator */
+#broken-indicator {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  color: #555;
+  font-size: 10px;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+#broken-indicator.flash { opacity: 1; }

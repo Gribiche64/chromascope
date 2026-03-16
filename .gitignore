@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+*.DS_Store
+
+# Build / generated
+build/
+dist/
+node_modules/
+
+# IDE / tools
+.vscode/
+.idea/
+.claude/
+
+# Environment
+.env
+
+# Large media (reference video)
+*.mp4
+
+# Extracted frames (generated from video)
+frames/
+study/
